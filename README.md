@@ -1,3 +1,1 @@
-# The-Odin-Project-Curriculum
-
-Sandbox repo for The Odin Project's curriculum
+Collection of projects and code snippets made as part of [The Odin Project](https://www.theodinproject.com/ "The Odin Project")'s curriculum
