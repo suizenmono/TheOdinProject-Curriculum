@@ -3,10 +3,10 @@ function drawComputerMove() {
     let computerMove;
     
     // excluded upper boundary means intervals are uniform => no bias
-    if (rng >= 0 && rng < 1) {
+    if (rng < 1) {
         computerMove = "Rock";
     }
-    else if (rng >= 1 && rng < 2) {
+    else if (rng < 2) {
         computerMove = "Paper";
     }
     else { // rng >= 2 && rng < 3
@@ -16,4 +16,3 @@ function drawComputerMove() {
     // console.log(rng, computerMove);
     return computerMove;
 }
-
