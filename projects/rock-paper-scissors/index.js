@@ -10,13 +10,11 @@ const uiResetBtn = document.querySelector("#btn-reset");
 document.querySelector("#btn-rock").addEventListener("click", startGame);
 document.querySelector("#btn-paper").addEventListener("click", startGame);
 document.querySelector("#btn-scissors").addEventListener("click", startGame);
-uiResetBtn.addEventListener("click", initGame);
+uiResetBtn.addEventListener("click", initialize);
 
-uiTitle.textContent = "Rock-Paper-Scissors";
-uiDescription.textContent = "What will you play?";
-uiReset.classList.add("hidden");
+initialize();
 
-function initGame() {
+function initialize() {
     uiTitle.textContent = "Rock-Paper-Scissors";
     uiDescription.textContent = "What will you play?";
     uiChoices.classList.remove("hidden");
