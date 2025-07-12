@@ -2,6 +2,8 @@
 
 const uiContainer = document.querySelector(".game-container");
 const uiTitle = document.querySelector(".title");
+const uiRound = document.querySelector(".round");
+const uiScore = document.querySelector(".score");
 const uiDescription = document.querySelector(".description");
 const uiChoices = document.querySelector(".choices");
 const uiReset = document.querySelector(".reset");
@@ -21,10 +23,14 @@ initializeUI();
 function initializeUI() {
     uiTitle.textContent = "Rock-Paper-Scissors";
     uiDescription.textContent = "What will you play?";
+    uiScore.classList.remove("hidden");
     uiChoices.classList.remove("hidden");
     uiReset.classList.add("hidden");
     uiContainer.style.backgroundColor = "var(--init-bg)";
     uiContainer.style.color = "var(--init-fg)";
+
+    uiRound.textContent = `Round ${roundCount} of ${maxRounds}`;
+    uiScore.textContent = `Current Score: ${playerScore}`;
 }
 
 function startGame(e) {
@@ -104,6 +110,7 @@ function setRNG() {
 function updateUI(_outcome, _playerMove, _computerMove) {
     uiChoices.classList.add("hidden");
     uiReset.classList.remove("hidden");
+    uiScore.classList.add("hidden");
 
     switch (_outcome) {
         case "win":
