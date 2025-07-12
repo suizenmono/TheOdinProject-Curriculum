@@ -14,6 +14,21 @@ body {
     height: 100vh;
 }
 
+a {
+    text-decoration: none;
+    color: #ccc;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+a:hover {
+    color: #fff;
+}
+
+p {
+    line-height: 1.5;
+}
+
 button {
     padding: 1em;
     border: none;
@@ -31,7 +46,7 @@ button {
     margin: 1rem;
 }
 
-.flex-wrapper > div {
+.flex-wrapper > main {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -70,4 +85,10 @@ button {
 
 .choices > button:hover {
     font-size: 1.1rem;
+}
+
+footer {
+    text-align: center;
+    font-size: 0.9rem;
+    color: #8c8c8c;
 }
