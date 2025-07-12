@@ -1,4 +1,4 @@
-function drawComputerMove() {
+function setComputerMove() {
     let rng = Math.random() * 3; // yields rng in [0,3)
     let computerMove;
     
