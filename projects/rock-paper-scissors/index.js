@@ -7,14 +7,18 @@ const uiChoices = document.querySelector(".choices");
 const uiReset = document.querySelector(".reset");
 const uiResetBtn = document.querySelector("#btn-reset");
 
+let playerScore = 0;
+let roundCount = 1;
+const maxRounds = 6;
+
 document.querySelector("#btn-rock").addEventListener("click", startGame);
 document.querySelector("#btn-paper").addEventListener("click", startGame);
 document.querySelector("#btn-scissors").addEventListener("click", startGame);
-uiResetBtn.addEventListener("click", initialize);
+uiResetBtn.addEventListener("click", initializeUI);
 
-initialize();
+initializeUI();
 
-function initialize() {
+function initializeUI() {
     uiTitle.textContent = "Rock-Paper-Scissors";
     uiDescription.textContent = "What will you play?";
     uiChoices.classList.remove("hidden");
@@ -27,6 +31,8 @@ function startGame(e) {
     let computerMove = setRNG();
     let playerMove;
     let outcome;
+
+    console.log("Round #:", roundCount);
 
     switch (e.target.id) {
         case "btn-rock":
@@ -50,11 +56,30 @@ function startGame(e) {
         || (playerMove === "Scissors" && computerMove === "Paper")
     ) {
         outcome = "win";
+        playerScore++;
     } else {
         outcome = "lose";
     }
     
-    console.log("Result:", outcome);
+    console.log("Round result:", outcome);
+    console.log("Current player score:", playerScore);
+
+    if (roundCount >= maxRounds) {
+        if (playerScore > maxRounds / 2) {
+            console.log("Final result: You're the winner!")
+        } else if (playerScore === maxRounds / 2) { // no draw possible if maxRounds is an odd number
+            console.log("Final result: That's a draw!")
+        } else {
+            console.log("Final result: You lost...")
+        }
+
+        console.log("Now reinitializing the game.");
+        roundCount = 1;
+        playerScore = 0;
+    } else {
+        roundCount++;
+    }
+    
     updateUI(outcome, playerMove, computerMove);
 }
 
@@ -103,5 +128,6 @@ function updateUI(_outcome, _playerMove, _computerMove) {
             uiResetBtn.style.color = "var(--draw-btn-fg)"
             break;
     }
+
     uiDescription.textContent = `You matched against ${_computerMove}`;
 }
