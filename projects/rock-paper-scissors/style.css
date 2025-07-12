@@ -59,6 +59,12 @@ button {
 }
 
 .game-container {
+    --win-bg: #00ea79;
+    --win-fg: #005a2e;
+    --lose-bg: #d80839;
+    --lose-fg: #520013;
+    --draw-bg: #ffe66b;
+    --draw-fg: #675e32;
     border: 3px solid #282828;
 }
 
@@ -72,9 +78,9 @@ button {
 }
 
 .choices > button {
-    --win-bg: #00ae5a;
-    --lose-bg: #960023;
-    --draw-bg: #d4b30d;
+    --win-btn-bg: #00ae5a;
+    --lose-btn-bg: #960023;
+    --draw-btn-bg: #d4b30d;
     flex: 1;
     background: transparent;
     border: 3px solid #282828;

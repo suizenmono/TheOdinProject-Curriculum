@@ -73,18 +73,18 @@ function setComputerMove() {
 function drawUI(_outcome, _playerMove, _computerMove) {
     switch (_outcome) {
         case "win":
-            uiContainer.style.backgroundColor = "#00ea79";
-            uiContainer.style.color = "white";
+            uiContainer.style.backgroundColor = "var(--win-bg)";
+            uiContainer.style.color = "var(--win-fg)";
             uiTitle.textContent = `${_playerMove} wins!`;
             break;
         case "lose":
-            uiContainer.style.backgroundColor = "#d80839";
-            uiContainer.style.color = "white";
+            uiContainer.style.backgroundColor = "var(--lose-bg)";
+            uiContainer.style.color = "var(--lose-fg)";
             uiTitle.textContent = `${_playerMove} looses...`;
             break;
         case "draw":
-            uiContainer.style.backgroundColor = "#ffe66b";
-            uiContainer.style.color = "black";
+            uiContainer.style.backgroundColor = "var(--draw-bg)";
+            uiContainer.style.color = "var(--draw-fg)";
             uiTitle.textContent = `${_playerMove} draws!`;
             break;
     }
