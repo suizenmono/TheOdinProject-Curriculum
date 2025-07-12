@@ -5,11 +5,12 @@ const uiTitle = document.querySelector(".title");
 const uiDescription = document.querySelector(".description");
 const uiChoices = document.querySelector(".choices");
 const uiReset = document.querySelector(".reset");
+const uiResetBtn = document.querySelector("#btn-reset");
 
 document.querySelector("#btn-rock").addEventListener("click", startGame);
 document.querySelector("#btn-paper").addEventListener("click", startGame);
 document.querySelector("#btn-scissors").addEventListener("click", startGame);
-document.querySelector("#btn-reset").addEventListener("click", initGame);
+uiResetBtn.addEventListener("click", initGame);
 
 uiTitle.textContent = "Rock-Paper-Scissors";
 uiDescription.textContent = "What will you play?";
@@ -83,19 +84,25 @@ function updateUI(_outcome, _playerMove, _computerMove) {
 
     switch (_outcome) {
         case "win":
+            uiTitle.textContent = `${_playerMove} wins!`;
             uiContainer.style.backgroundColor = "var(--win-bg)";
             uiContainer.style.color = "var(--win-fg)";
-            uiTitle.textContent = `${_playerMove} wins!`;
+            uiResetBtn.style.backgroundColor = "var(--win-btn-bg)"
+            uiResetBtn.style.color = "var(--win-btn-fg)"
             break;
         case "lose":
+            uiTitle.textContent = `${_playerMove} looses...`;
             uiContainer.style.backgroundColor = "var(--lose-bg)";
             uiContainer.style.color = "var(--lose-fg)";
-            uiTitle.textContent = `${_playerMove} looses...`;
+            uiResetBtn.style.backgroundColor = "var(--lose-btn-bg)"
+            uiResetBtn.style.color = "var(--lose-btn-fg)"
             break;
         case "draw":
+            uiTitle.textContent = `${_playerMove} draws!`;
             uiContainer.style.backgroundColor = "var(--draw-bg)";
             uiContainer.style.color = "var(--draw-fg)";
-            uiTitle.textContent = `${_playerMove} draws!`;
+            uiResetBtn.style.backgroundColor = "var(--draw-btn-bg)"
+            uiResetBtn.style.color = "var(--draw-btn-fg)"
             break;
     }
     uiDescription.textContent = `You matched against ${_computerMove}`;

@@ -81,10 +81,9 @@ button {
 .choices > button,
 .reset > button {
     flex: 1;
-    background: transparent;
-    border: 3px solid #282828;
-    color: #fff;
     font-size: 1.2rem;
+    background: transparent;
+    color: #fff;
     transition: font-size 0.2s ease;
 }
 
@@ -93,10 +92,17 @@ button {
     font-size: 1.1rem;
 }
 
+.choices > button {
+    border: 3px solid #282828;
+}
+
 .reset > button {
     --win-btn-bg: #00ae5a;
     --lose-btn-bg: #960023;
     --draw-btn-bg: #d4b30d;
+    --win-btn-fg: #b4ffdb;
+    --lose-btn-fg: #ff93ac;
+    --draw-btn-fg: #fff6c6;
 }
 
 footer {
