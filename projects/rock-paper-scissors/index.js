@@ -3,21 +3,30 @@
 const uiContainer = document.querySelector(".game-container");
 const uiTitle = document.querySelector(".title");
 const uiDescription = document.querySelector(".description");
-uiTitle.textContent = "Rock-Paper-Scissors";
-uiDescription.textContent = "What will you play?";
+const uiChoices = document.querySelector(".choices");
+const uiReset = document.querySelector(".reset");
 
 document.querySelector("#btn-rock").addEventListener("click", startGame);
 document.querySelector("#btn-paper").addEventListener("click", startGame);
 document.querySelector("#btn-scissors").addEventListener("click", startGame);
+document.querySelector("#btn-reset").addEventListener("click", initGame);
+
+uiTitle.textContent = "Rock-Paper-Scissors";
+uiDescription.textContent = "What will you play?";
+uiReset.classList.add("hidden");
+
+function initGame() {
+    uiTitle.textContent = "Rock-Paper-Scissors";
+    uiDescription.textContent = "What will you play?";
+    uiChoices.classList.remove("hidden");
+    uiReset.classList.add("hidden");
+    uiContainer.style.backgroundColor = "var(--init-bg)";
+    uiContainer.style.color = "var(--init-fg)";
+}
 
 function startGame(e) {
-    let computerMove = setComputerMove();
+    let computerMove = setRNG();
     let playerMove;
-    // const wins = [
-    // playerMove === "Rock" && computerMove === "Scissors",
-    // playerMove === "Paper" && computerMove === "Rock",
-    // playerMove === "Scissors" && computerMove === "Paper"
-    // ];
     let outcome;
 
     switch (e.target.id) {
@@ -47,11 +56,10 @@ function startGame(e) {
     }
     
     console.log("Result:", outcome);
-
-    drawUI(outcome, playerMove, computerMove);
+    updateUI(outcome, playerMove, computerMove);
 }
 
-function setComputerMove() {
+function setRNG() {
     let rng = Math.random() * 3; // yields rng in [0,3)
     let computerMove;
     
@@ -66,11 +74,13 @@ function setComputerMove() {
         computerMove = "Scissors";
     }
 
-    // console.log(rng, computerMove);
     return computerMove;
 }
 
-function drawUI(_outcome, _playerMove, _computerMove) {
+function updateUI(_outcome, _playerMove, _computerMove) {
+    uiChoices.classList.add("hidden");
+    uiReset.classList.remove("hidden");
+
     switch (_outcome) {
         case "win":
             uiContainer.style.backgroundColor = "var(--win-bg)";
