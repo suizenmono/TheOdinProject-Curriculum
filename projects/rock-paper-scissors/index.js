@@ -4,7 +4,8 @@ const uiInteract = document.querySelector(".interact");
 const uiTitle = document.querySelector(".title");
 const uiRound = document.querySelector(".round");
 const uiCurrentScore = document.querySelector(".current-score");
-const uiFinalScore = document.querySelector(".final-score");
+const uiFinalPlayerScore = document.querySelector(".player-score");
+const uiFinalComputerScore = document.querySelector(".computer-score");
 const uiDescription = document.querySelector(".description");
 const uiChoices = document.querySelector(".choices");
 const uiReset = document.querySelector(".reset");
@@ -13,8 +14,8 @@ const uiOutcomeMsg = document.querySelector(".final-outcome-message");
 
 const maxRounds = 6;
 let playerScore = 0;
+let computerScore = 0;
 let roundCount = 1;
-let finalScore = null;
 let finalOutcome = null;
 
 document.querySelector("#btn-rock").addEventListener("click", startGame);
@@ -56,37 +57,39 @@ function startGame(e) {
         playerScore++;
     } else {
         roundOutcome = "lose";
+        computerScore++;
     }
     
     console.log("Round result:", roundOutcome);
     console.log("Current player score:", playerScore);
+    console.log("Current computer score:", computerScore);
 
     if (roundCount >= maxRounds) {
-        finalScore = playerScore;
         
-        if (playerScore > maxRounds / 2) {
+        if (playerScore > computerScore) {
             finalOutcome = "winner";
-            console.log("Final result: You're the winner!");
-        } else if (playerScore === maxRounds / 2) { // no draw possible if maxRounds is an odd number
+            console.log("You won the game!");
+        } else if (playerScore === computerScore) {
             finalOutcome = "no contest";
-            console.log("Final result: That's a draw!");
+            console.log("That's a draw!");
         } else {
             finalOutcome = "loser";
-            console.log("Final result: You lost...");
+            console.log("You lost the game...");
         }
         
-        console.log("Final score:", finalScore);
+        console.log("Your final score:", playerScore);
+        console.log("Computer score:", computerScore);
 
-        updateUI(roundOutcome, finalOutcome, finalScore, playerMove, computerMove);
+        updateUI(roundOutcome, finalOutcome, playerScore, computerScore, playerMove, computerMove);
         
         console.log("Now reinitializing the game.");
         roundCount = 1;
         playerScore = 0;
+        computerScore = 0;
         finalOutcome = null;
-        finalScore = null;
     } else {
         roundCount++;
-        updateUI(roundOutcome, finalOutcome, finalScore, playerMove, computerMove);
+        updateUI(roundOutcome, finalOutcome, playerScore, computerScore, playerMove, computerMove);
     }
 }
 
@@ -113,7 +116,8 @@ function initializeUI() {
     uiDescription.textContent = "What will you play?";
     uiResetBtn.textContent = "Next Round";
     uiCurrentScore.classList.remove("hidden");
-    uiFinalScore.classList.add("hidden");
+    uiFinalPlayerScore.classList.add("hidden");
+    uiFinalComputerScore.classList.add("hidden");
     uiChoices.classList.remove("hidden");
     uiReset.classList.add("hidden");
     uiOutcomeMsg.classList.add("hidden");
@@ -128,7 +132,7 @@ function initializeUI() {
     uiCurrentScore.textContent = `Current Score: ${playerScore}`;
 }
 
-function updateUI(_roundOutcome, _finalOutcome, _finalScore, _playerMove, _computerMove) { // consider using an object instead
+function updateUI(_roundOutcome, _finalOutcome, _finalPlayerScore, _finalComputerScore, _playerMove, _computerMove) { // consider using an object instead
     uiChoices.classList.add("hidden");
     uiReset.classList.remove("hidden");
     uiCurrentScore.classList.add("hidden");
@@ -178,8 +182,10 @@ function updateUI(_roundOutcome, _finalOutcome, _finalScore, _playerMove, _compu
 
     if (_finalOutcome) {
         uiOutcomeMsg.classList.remove("hidden");
-        uiFinalScore.classList.remove("hidden");
-        uiFinalScore.textContent = `Final Score: ${_finalScore}/${maxRounds}`;
+        uiFinalPlayerScore.classList.remove("hidden");
+        uiFinalComputerScore.classList.remove("hidden");
+        uiFinalPlayerScore.textContent = `You: ${_finalPlayerScore}`;
+        uiFinalComputerScore.textContent = `Computer: ${_finalComputerScore}`;
         uiResetBtn.textContent = "New Game";
         uiResetBtn.style.border = "none";
     }
