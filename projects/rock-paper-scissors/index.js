@@ -110,6 +110,7 @@ function setRNG() {
 function initializeUI() {
     uiTitle.textContent = "Rock-Paper-Scissors";
     uiDescription.textContent = "What will you play?";
+    uiResetBtn.textContent = "Next Round";
     uiScore.classList.remove("hidden");
     uiChoices.classList.remove("hidden");
     uiReset.classList.add("hidden");
@@ -176,5 +177,6 @@ function updateUI(_roundOutcome, _finalOutcome, _finalScore, _playerMove, _compu
         uiOutcomeMsg.classList.remove("hidden");
         uiScore.textContent = `Final Score: ${_finalScore}/${maxRounds}`;
         uiScore.classList.remove("hidden");
+        uiResetBtn.textContent = "New Game";
     }
 }
