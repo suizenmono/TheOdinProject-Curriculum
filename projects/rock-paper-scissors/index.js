@@ -10,9 +10,11 @@ const uiReset = document.querySelector(".reset");
 const uiResetBtn = document.querySelector("#btn-reset");
 const uiOutcomeMsg = document.querySelector(".final-outcome-message");
 
+const maxRounds = 6;
 let playerScore = 0;
 let roundCount = 1;
-const maxRounds = 6;
+let finalScore = null;
+let finalOutcome = null;
 
 document.querySelector("#btn-rock").addEventListener("click", startGame);
 document.querySelector("#btn-paper").addEventListener("click", startGame);
@@ -21,27 +23,10 @@ uiResetBtn.addEventListener("click", initializeUI);
 
 initializeUI();
 
-function initializeUI() {
-    uiTitle.textContent = "Rock-Paper-Scissors";
-    uiDescription.textContent = "What will you play?";
-    uiScore.classList.remove("hidden");
-    uiChoices.classList.remove("hidden");
-    uiReset.classList.add("hidden");
-    uiOutcomeMsg.classList.add("hidden");
-    uiContainer.style.backgroundColor = "var(--init-bg)";
-    uiContainer.style.color = "var(--init-fg)";
-    uiTitle.style.color = "var(--title-init)";
-
-    uiRound.textContent = `Round ${roundCount} of ${maxRounds}`;
-    uiScore.textContent = `Current Score: ${playerScore}`;
-}
-
 function startGame(e) {
     let computerMove = setRNG();
     let playerMove;
     let roundOutcome;
-    let finalScore;
-    let finalOutcome = null;
 
     console.log("Round #:", roundCount);
 
@@ -77,6 +62,7 @@ function startGame(e) {
 
     if (roundCount >= maxRounds) {
         finalScore = playerScore;
+        
         if (playerScore > maxRounds / 2) {
             finalOutcome = "winner";
             console.log("Final result: You're the winner!");
@@ -87,14 +73,20 @@ function startGame(e) {
             finalOutcome = "loser";
             console.log("Final result: You lost...");
         }
+        
+        console.log("Final score:", finalScore);
+
+        updateUI(roundOutcome, finalOutcome, finalScore, playerMove, computerMove);
+        
         console.log("Now reinitializing the game.");
         roundCount = 1;
         playerScore = 0;
+        finalOutcome = null;
+        finalScore = null;
     } else {
         roundCount++;
+        updateUI(roundOutcome, finalOutcome, finalScore, playerMove, computerMove);
     }
-    
-    updateUI(roundOutcome, finalOutcome, finalScore, playerMove, computerMove);
 }
 
 function setRNG() {
@@ -115,7 +107,24 @@ function setRNG() {
     return computerMove;
 }
 
-function updateUI(_roundOutcome, _finalOutcome, _finalScore, _playerMove, _computerMove) {
+function initializeUI() {
+    uiTitle.textContent = "Rock-Paper-Scissors";
+    uiDescription.textContent = "What will you play?";
+    uiScore.classList.remove("hidden");
+    uiChoices.classList.remove("hidden");
+    uiReset.classList.add("hidden");
+    uiOutcomeMsg.classList.add("hidden");
+    uiContainer.style.backgroundColor = "var(--init-bg)";
+    uiContainer.style.color = "var(--init-fg)";
+    uiTitle.style.color = "var(--title-init)";
+    uiResetBtn.style.backgroundColor = "var(--btn-bg-init)"
+    uiResetBtn.style.color = "var(--btn-fg-init)";
+
+    uiRound.textContent = `Round ${roundCount} of ${maxRounds}`;
+    uiScore.textContent = `Current Score: ${playerScore}`;
+}
+
+function updateUI(_roundOutcome, _finalOutcome, _finalScore, _playerMove, _computerMove) { // consider using an object instead
     uiChoices.classList.add("hidden");
     uiReset.classList.remove("hidden");
     uiScore.classList.add("hidden");
@@ -137,13 +146,9 @@ function updateUI(_roundOutcome, _finalOutcome, _finalScore, _playerMove, _compu
 
     uiDescription.textContent = `You matched against ${_computerMove}`;
 
-    if (_finalOutcome) {
-        uiOutcomeMsg.classList.remove("hidden");
-        uiScore.textContent = `Final Score: ${_finalScore}/${maxRounds}`;
-        uiScore.classList.remove("hidden");
-    }
-
     switch (_finalOutcome) {
+        case null:
+            break;
         case "winner":
             uiOutcomeMsg.textContent = "You won the game!";
             uiContainer.style.backgroundColor = "var(--win-bg)";
@@ -165,5 +170,11 @@ function updateUI(_roundOutcome, _finalOutcome, _finalScore, _playerMove, _compu
             uiResetBtn.style.backgroundColor = "var(--draw-btn-bg)"
             uiResetBtn.style.color = "var(--draw-btn-fg)";
             break;
+    }
+
+    if (_finalOutcome) {
+        uiOutcomeMsg.classList.remove("hidden");
+        uiScore.textContent = `Final Score: ${_finalScore}/${maxRounds}`;
+        uiScore.classList.remove("hidden");
     }
 }
