@@ -8,6 +8,7 @@ const uiDescription = document.querySelector(".description");
 const uiChoices = document.querySelector(".choices");
 const uiReset = document.querySelector(".reset");
 const uiResetBtn = document.querySelector("#btn-reset");
+const uiOutcomeMsg = document.querySelector(".final-outcome-message");
 
 let playerScore = 0;
 let roundCount = 1;
@@ -26,8 +27,10 @@ function initializeUI() {
     uiScore.classList.remove("hidden");
     uiChoices.classList.remove("hidden");
     uiReset.classList.add("hidden");
+    uiOutcomeMsg.classList.add("hidden");
     uiContainer.style.backgroundColor = "var(--init-bg)";
     uiContainer.style.color = "var(--init-fg)";
+    uiTitle.style.color = "var(--title-init)";
 
     uiRound.textContent = `Round ${roundCount} of ${maxRounds}`;
     uiScore.textContent = `Current Score: ${playerScore}`;
@@ -36,7 +39,9 @@ function initializeUI() {
 function startGame(e) {
     let computerMove = setRNG();
     let playerMove;
-    let outcome;
+    let roundOutcome;
+    let finalScore;
+    let finalOutcome = null;
 
     console.log("Round #:", roundCount);
 
@@ -55,30 +60,33 @@ function startGame(e) {
     console.log("Player:", playerMove, "\nComputer:", computerMove);
 
     if (playerMove === computerMove) {
-        outcome = "draw";
+        roundOutcome = "draw";
     } else if (
         (playerMove === "Rock" && computerMove === "Scissors")
         || (playerMove === "Paper" && computerMove === "Rock")
         || (playerMove === "Scissors" && computerMove === "Paper")
     ) {
-        outcome = "win";
+        roundOutcome = "win";
         playerScore++;
     } else {
-        outcome = "lose";
+        roundOutcome = "lose";
     }
     
-    console.log("Round result:", outcome);
+    console.log("Round result:", roundOutcome);
     console.log("Current player score:", playerScore);
 
     if (roundCount >= maxRounds) {
+        finalScore = playerScore;
         if (playerScore > maxRounds / 2) {
-            console.log("Final result: You're the winner!")
+            finalOutcome = "winner";
+            console.log("Final result: You're the winner!");
         } else if (playerScore === maxRounds / 2) { // no draw possible if maxRounds is an odd number
-            console.log("Final result: That's a draw!")
+            finalOutcome = "no contest";
+            console.log("Final result: That's a draw!");
         } else {
-            console.log("Final result: You lost...")
+            finalOutcome = "loser";
+            console.log("Final result: You lost...");
         }
-
         console.log("Now reinitializing the game.");
         roundCount = 1;
         playerScore = 0;
@@ -86,7 +94,7 @@ function startGame(e) {
         roundCount++;
     }
     
-    updateUI(outcome, playerMove, computerMove);
+    updateUI(roundOutcome, finalOutcome, finalScore, playerMove, computerMove);
 }
 
 function setRNG() {
@@ -107,34 +115,55 @@ function setRNG() {
     return computerMove;
 }
 
-function updateUI(_outcome, _playerMove, _computerMove) {
+function updateUI(_roundOutcome, _finalOutcome, _finalScore, _playerMove, _computerMove) {
     uiChoices.classList.add("hidden");
     uiReset.classList.remove("hidden");
     uiScore.classList.add("hidden");
 
-    switch (_outcome) {
+    switch (_roundOutcome) {
         case "win":
             uiTitle.textContent = `${_playerMove} wins!`;
-            uiContainer.style.backgroundColor = "var(--win-bg)";
-            uiContainer.style.color = "var(--win-fg)";
-            uiResetBtn.style.backgroundColor = "var(--win-btn-bg)"
-            uiResetBtn.style.color = "var(--win-btn-fg)"
+            uiTitle.style.color = "var(--title-win)";
             break;
         case "lose":
             uiTitle.textContent = `${_playerMove} looses...`;
-            uiContainer.style.backgroundColor = "var(--lose-bg)";
-            uiContainer.style.color = "var(--lose-fg)";
-            uiResetBtn.style.backgroundColor = "var(--lose-btn-bg)"
-            uiResetBtn.style.color = "var(--lose-btn-fg)"
+            uiTitle.style.color = "var(--title-lose)";
             break;
         case "draw":
             uiTitle.textContent = `${_playerMove} draws!`;
-            uiContainer.style.backgroundColor = "var(--draw-bg)";
-            uiContainer.style.color = "var(--draw-fg)";
-            uiResetBtn.style.backgroundColor = "var(--draw-btn-bg)"
-            uiResetBtn.style.color = "var(--draw-btn-fg)"
+            uiTitle.style.color = "var(--title-draw)";
             break;
     }
 
     uiDescription.textContent = `You matched against ${_computerMove}`;
+
+    if (_finalOutcome) {
+        uiOutcomeMsg.classList.remove("hidden");
+        uiScore.textContent = `Final Score: ${_finalScore}/${maxRounds}`;
+        uiScore.classList.remove("hidden");
+    }
+
+    switch (_finalOutcome) {
+        case "winner":
+            uiOutcomeMsg.textContent = "You won the game!";
+            uiContainer.style.backgroundColor = "var(--win-bg)";
+            uiContainer.style.color = "var(--win-fg)";
+            uiResetBtn.style.backgroundColor = "var(--win-btn-bg)"
+            uiResetBtn.style.color = "var(--win-btn-fg)";
+            break;
+        case "loser":
+            uiOutcomeMsg.textContent = "You lost the game...";
+            uiContainer.style.backgroundColor = "var(--lose-bg)";
+            uiContainer.style.color = "var(--lose-fg)";
+            uiResetBtn.style.backgroundColor = "var(--lose-btn-bg)"
+            uiResetBtn.style.color = "var(--lose-btn-fg)";
+            break;
+        case "no contest":
+            uiOutcomeMsg.textContent = "That's a draw!";
+            uiContainer.style.backgroundColor = "var(--draw-bg)";
+            uiContainer.style.color = "var(--draw-fg)";
+            uiResetBtn.style.backgroundColor = "var(--draw-btn-bg)"
+            uiResetBtn.style.color = "var(--draw-btn-fg)";
+            break;
+    }
 }

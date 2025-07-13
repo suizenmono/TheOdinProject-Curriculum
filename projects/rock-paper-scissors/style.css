@@ -1,3 +1,10 @@
+:root {
+    --title-init: #fff;
+    --title-win: #00ea79;
+    --title-lose: #d80839;
+    --title-draw: #ffe66b;
+}
+
 *, *::before, *::after {
     margin: 0; padding: 0;
     box-sizing: border-box;
