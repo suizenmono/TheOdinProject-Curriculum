@@ -4,6 +4,7 @@ const uiInteract = document.querySelector(".interact");
 const uiTitle = document.querySelector(".title");
 const uiRound = document.querySelector(".round");
 const uiCurrentScore = document.querySelector(".current-score");
+const uiFinalScores = document.querySelector(".final-score");
 const uiFinalPlayerScore = document.querySelector(".player-score");
 const uiFinalComputerScore = document.querySelector(".computer-score");
 const uiFinalDrawCount = document.querySelector(".draw-count");
@@ -119,9 +120,7 @@ function initializeUI() {
     uiDescription.textContent = "What will you play?";
     uiResetBtn.textContent = "Next Round";
     uiCurrentScore.classList.remove("hidden");
-    uiFinalPlayerScore.classList.add("hidden");
-    uiFinalComputerScore.classList.add("hidden");
-    uiFinalDrawCount.classList.add("hidden");
+    uiFinalScores.classList.add("hidden");
     uiChoices.classList.remove("hidden");
     uiReset.classList.add("hidden");
     uiOutcomeMsg.classList.add("hidden");
@@ -186,9 +185,7 @@ function updateUI(_roundOutcome, _finalOutcome, _finalPlayerScore, _finalCompute
 
     if (_finalOutcome) {
         uiOutcomeMsg.classList.remove("hidden");
-        uiFinalPlayerScore.classList.remove("hidden");
-        uiFinalComputerScore.classList.remove("hidden");
-        uiFinalDrawCount.classList.remove("hidden");
+        uiFinalScores.classList.remove("hidden");
         uiFinalPlayerScore.textContent = `You: ${_finalPlayerScore}`;
         uiFinalComputerScore.textContent = `Computer: ${_finalComputerScore}`;
         uiFinalDrawCount.textContent = `Draws: ${_finalDrawCount}`;
