@@ -75,7 +75,8 @@ button {
     --draw-fg: #675e32;
 }
 
-.choices {
+.choices,
+.reset {
     display: flex;
     justify-content: center;
     align-items: center;
