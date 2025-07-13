@@ -1,9 +1,10 @@
 'use strict';
 
-const uiContainer = document.querySelector(".game-container");
+const uiInteract = document.querySelector(".interact");
 const uiTitle = document.querySelector(".title");
 const uiRound = document.querySelector(".round");
-const uiScore = document.querySelector(".score");
+const uiCurrentScore = document.querySelector(".current-score");
+const uiFinalScore = document.querySelector(".final-score");
 const uiDescription = document.querySelector(".description");
 const uiChoices = document.querySelector(".choices");
 const uiReset = document.querySelector(".reset");
@@ -111,24 +112,26 @@ function initializeUI() {
     uiTitle.textContent = "Rock-Paper-Scissors";
     uiDescription.textContent = "What will you play?";
     uiResetBtn.textContent = "Next Round";
-    uiScore.classList.remove("hidden");
+    uiCurrentScore.classList.remove("hidden");
+    uiFinalScore.classList.add("hidden");
     uiChoices.classList.remove("hidden");
     uiReset.classList.add("hidden");
     uiOutcomeMsg.classList.add("hidden");
-    uiContainer.style.backgroundColor = "var(--init-bg)";
-    uiContainer.style.color = "var(--init-fg)";
+    uiInteract.style.backgroundColor = "var(--init-bg)";
+    uiInteract.style.color = "var(--init-fg)";
     uiTitle.style.color = "var(--title-init)";
     uiResetBtn.style.backgroundColor = "var(--btn-bg-init)"
     uiResetBtn.style.color = "var(--btn-fg-init)";
+    uiResetBtn.style.border = "var(--btn-border-init)";
 
     uiRound.textContent = `Round ${roundCount} of ${maxRounds}`;
-    uiScore.textContent = `Current Score: ${playerScore}`;
+    uiCurrentScore.textContent = `Current Score: ${playerScore}`;
 }
 
 function updateUI(_roundOutcome, _finalOutcome, _finalScore, _playerMove, _computerMove) { // consider using an object instead
     uiChoices.classList.add("hidden");
     uiReset.classList.remove("hidden");
-    uiScore.classList.add("hidden");
+    uiCurrentScore.classList.add("hidden");
 
     switch (_roundOutcome) {
         case "win":
@@ -152,22 +155,22 @@ function updateUI(_roundOutcome, _finalOutcome, _finalScore, _playerMove, _compu
             break;
         case "winner":
             uiOutcomeMsg.textContent = "You won the game!";
-            uiContainer.style.backgroundColor = "var(--win-bg)";
-            uiContainer.style.color = "var(--win-fg)";
+            uiInteract.style.backgroundColor = "var(--win-bg)";
+            uiInteract.style.color = "var(--win-fg)";
             uiResetBtn.style.backgroundColor = "var(--win-btn-bg)"
             uiResetBtn.style.color = "var(--win-btn-fg)";
             break;
         case "loser":
             uiOutcomeMsg.textContent = "You lost the game...";
-            uiContainer.style.backgroundColor = "var(--lose-bg)";
-            uiContainer.style.color = "var(--lose-fg)";
+            uiInteract.style.backgroundColor = "var(--lose-bg)";
+            uiInteract.style.color = "var(--lose-fg)";
             uiResetBtn.style.backgroundColor = "var(--lose-btn-bg)"
             uiResetBtn.style.color = "var(--lose-btn-fg)";
             break;
         case "no contest":
             uiOutcomeMsg.textContent = "That's a draw!";
-            uiContainer.style.backgroundColor = "var(--draw-bg)";
-            uiContainer.style.color = "var(--draw-fg)";
+            uiInteract.style.backgroundColor = "var(--draw-bg)";
+            uiInteract.style.color = "var(--draw-fg)";
             uiResetBtn.style.backgroundColor = "var(--draw-btn-bg)"
             uiResetBtn.style.color = "var(--draw-btn-fg)";
             break;
@@ -175,8 +178,9 @@ function updateUI(_roundOutcome, _finalOutcome, _finalScore, _playerMove, _compu
 
     if (_finalOutcome) {
         uiOutcomeMsg.classList.remove("hidden");
-        uiScore.textContent = `Final Score: ${_finalScore}/${maxRounds}`;
-        uiScore.classList.remove("hidden");
+        uiFinalScore.classList.remove("hidden");
+        uiFinalScore.textContent = `Final Score: ${_finalScore}/${maxRounds}`;
         uiResetBtn.textContent = "New Game";
+        uiResetBtn.style.border = "none";
     }
 }
